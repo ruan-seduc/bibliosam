@@ -3,7 +3,7 @@
 $servidor = "localhost";
 $usuario ="root";
 $senha = "";
-$nomeBanco = "books_system";
+$nomeBanco = "bibliosam_db";
 
 $conexao = mysqli_connect($servidor,$usuario,$senha,$nomeBanco);
 mysqli_set_charset($conexao, "utf8");
