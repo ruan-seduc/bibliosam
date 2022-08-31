@@ -1,0 +1,1 @@
+O css eventualmente apresentou alguns problemas de link com o php durante o desenvolvimento. Por essa razão, estão criados mais de uma folha de css. Se conseguirem estilizar em folha única sem apresentar bugs no php, podem unificar os estilos em apenas uma folha no diretório padrão: "./assets/css/style.css".

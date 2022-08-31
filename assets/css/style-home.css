@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap');
+
+.accordion-item {
+    list-style: none;
+}
+
+body {
+    background-image: url(../img/background_home.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.navbar {
+    background-color: rgb(102, 52, 45);
+}
+
+h1 {
+    font-family: 'Poppins', sans-serif;
+}
+
+@media (max-width: 930px) {
+    .media-control {
+        width: 100% !important;
+    }
+}
+
+.accordion-button:not(.collapsed) {
+    color: black;
+    background-color: rgba(233, 222, 218, 0.5);
+    box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+}
+
+.accordion-button:focus {
+    border-color: rgb(102, 52, 45);
+    box-shadow: 0 0 0 0.25rem rgba(102, 52, 45, 0.527);
+}
+
+.form-control:focus {
+    border-color: rgba(102, 52, 45, 0.719) !important;
+    box-shadow: 0 0 0 0.25rem rgba(102, 52, 45, 0.527);
+}

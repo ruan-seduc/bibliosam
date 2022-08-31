@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap');
+
+.body-form {
+    background-color: rgb(102, 52, 45);
+    background-image: url(../img/background_emprest.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.navbar {
+    background-color: rgb(102, 52, 45);
+}
+
+h1 {
+    font-family: 'Poppins', sans-serif;
+}

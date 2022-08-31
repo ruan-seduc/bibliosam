@@ -1,0 +1,9 @@
+@media (max-width: 1000px) {
+    .justify-content-start {
+        justify-content: center !important;
+    }
+
+    .text-start {
+        text-align: center !important;
+    }
+}
