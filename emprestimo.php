@@ -1,60 +1,57 @@
 <?php
-    session_start();
-    include('verifica_login.php');
-    include "conexao.php";
+session_start();
+include('verifica_login.php');
+include "conexao.php";
 
-    if(isset($_GET['codigo'])){
-        $id = $_GET['codigo'];
-        $resultado = mysqli_query($conexao, "Select * from livros where codigo = '$id'");
-        $dados = mysqli_fetch_array($resultado);
-        
-        $search = mysqli_query($conexao, "SELECT codigo, status FROM livros where codigo = '$id' AND status = 'emprestado'");
-        if (mysqli_num_rows($search)){
-            header('Location: devolucao.php?codigo='.$id);
-            exit;   
-        }; 
-    }   
-    
+if (isset($_GET['codigo'])) {
+    $id = $_GET['codigo'];
+    $resultado = mysqli_query($conexao, "Select * from livros where codigo = '$id'");
+    $dados = mysqli_fetch_array($resultado);
 
-    if (isset($_POST['codigo'])) {
-        $codigo = trim($_POST['codigo']);
-        $nome = $_POST['nome'];
-        $turma = $_POST['turma'];
-        $emprestado = $_POST['data'];
-        $prazo = $_POST['prazo'];
-    
-        $sql = "select count(*) as total from registro where codigo = '$codigo'";
-        $result = mysqli_query($conexao, $sql);
-        $row = mysqli_fetch_assoc($result);
-    
-    if($row['total'] == 1) {
+    $search = mysqli_query($conexao, "SELECT codigo, status FROM livros where codigo = '$id' AND status = 'emprestado'");
+    if (mysqli_num_rows($search)) {
+        header('Location: devolucao.php?codigo=' . $id);
+        exit;
+    };
+}
+
+
+if (isset($_POST['codigo'])) {
+    $codigo = trim($_POST['codigo']);
+    $nome = $_POST['nome'];
+    $turma = $_POST['turma'];
+    $emprestado = $_POST['data'];
+    $prazo = $_POST['prazo'];
+
+    $sql = "select count(*) as total from registro where codigo = '$codigo'";
+    $result = mysqli_query($conexao, $sql);
+    $row = mysqli_fetch_assoc($result);
+
+    if ($row['total'] == 1) {
         $_SESSION['codigo_duplicado'] = true;
-            header('Location: emprestimo.php');
-            exit;
-        
+        header('Location: emprestimo.php');
+        exit;
     }
-        if (mysqli_query($conexao, "insert into registro (codigo, nome, turma, data, prazo) Value ('$codigo','$nome','$turma','$emprestado','$prazo') ")) {
-            $sqlb = "UPDATE livros SET status = 'emprestado' WHERE codigo = '$id'";
-            if(mysqli_query($conexao, $sqlb)){
-                ?>
+    if (mysqli_query($conexao, "insert into registro (codigo, nome, turma, data, prazo) Value ('$codigo','$nome','$turma','$emprestado','$prazo') ")) {
+        $sqlb = "UPDATE livros SET status = 'emprestado' WHERE codigo = '$id'";
+        if (mysqli_query($conexao, $sqlb)) {
+?>
 <script type="text/javascript">
 alert("Empréstimo realizado com sucesso!")
 window.location.href = "home.php";
 </script>
 <?php
 
-            }
-    
-        } else { ?>
+        }
+    } else { ?>
 <script type="text/javascript">
 alert("Algo deu errado!")
 window.location.href = "home.php";
 </script>
 <?php
-        }
-
     }
-    
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -82,7 +79,7 @@ window.location.href = "home.php";
         <!-- NavBar -->
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark rounded">
             <div class="container-fluid">
-                <a class="navbar-brand" href="home.php">BiblioTech</a>
+                <a class="navbar-brand" href="home.php">Biblioteca</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -96,7 +93,11 @@ window.location.href = "home.php";
                                     <a class="nav-link" aria-current="page" href="home.php">Home</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="alunos.php">Alunos</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="logout.php">Sair</a>
+                                </li>
                             </ul>
                         </div>
                     </div>

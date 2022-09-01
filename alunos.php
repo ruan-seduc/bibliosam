@@ -4,11 +4,11 @@ include('verifica_login.php');
 include "conexao.php";
 
 
-$busca = "select * from livros order by titulo";
+$busca = "select * from alunos order by nome";
 
 // sistema de paginação
 
-$total_reg = "2"; // número de registros por página
+$total_reg = "20"; // número de registros por página
 
 $pagina = $_GET['pagina'];
 if (!$pagina) {
@@ -44,7 +44,7 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
 
     <link rel="stylesheet" href="assets/css/style-home.css">
 
-    <title>Controle de Livros</title>
+    <title>Alunos</title>
 </head>
 
 <body>
@@ -77,82 +77,73 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
                 </div>
         </nav>
         <!--//NavBar-->
-        <h1 class="text-center mt-5 p-4">Controle de Livros</h1>
-
-        <form method="GET" action="busca.php">
-            <label for="consulta">Buscar:</label>
-            <input type="text" id="consulta" name="consulta" maxlength="255" />
-
-            <input type="submit" value="OK" />
-        </form>
+        <h1 class="text-center mt-5 p-4">Alunos</h1>
 
         <div class="row justify-content-center">
             <div class="col-6">
                 <input id="searchbar" onkeyup="search_books()" type="text" class="form-control"
                     placeholder="Pesquisar livros">
             </div>
+        </div>
 
-            <style>
-            .form-control:focus {
-                border-color: rgb(102, 52, 45) !important;
-                box-shadow: 0 0 0 0.12rem rgba(102, 52, 45, 0.719);
-            }
-            </style>
+        <style>
+        .form-control:focus {
+            border-color: rgb(102, 52, 45) !important;
+            box-shadow: 0 0 0 0.12rem rgba(102, 52, 45, 0.719);
+        }
+        </style>
 
-            <div class="row justify-content-center">
-                <div class="col-auto mt-3">
-                    <a class="btn btn-dark" href="adicionar.php" role="button">Adicionar Livro</a>
-                </div>
+        <div class="row justify-content-center">
+            <div class="col-auto mt-3">
+                <a class="btn btn-dark" href="cadastro_alunos.php" role="button">Cadastrar Aluno</a>
             </div>
+        </div>
 
-            <div class="row justify-content-center">
-                <div class="accordion mt-4 col-8 media-control" id="accordion">
-                    <?php
-                    for ($read = 1; $res = mysqli_fetch_array($limite); $read++) {
-                        echo "
+
+        <div class="row justify-content-center">
+            <div class="accordion mt-4 col-8 media-control" id="accordion">
+                <?php
+                for ($read = 1; $res = mysqli_fetch_array($limite); $read++) {
+                    echo "
                         <div class='accordion-item'>
                             <h2 class='accordion-header' id='heading" . $read . "'>
                             <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse'
                             data-bs-target='#collapse" . $read . "' aria-expanded='false' aria-controls='collapse" . $read . "'>"
-                            . $res['codigo'] . " - " . $res['titulo'] . "
+                        . $res['nome'] . " - " . $res['turma'] . "
                             </button>
                             </h2>
                             <div id='collapse" . $read . "' class='accordion-collapse collapse' aria-labelledby='heading" . $read . "'
                             data-bs-parent='#accordion'>
                             <div class='row justify-content-center'>
                                 <div class='accordion-body col-auto'>
-                                    Autor: " . $res['autor'] . "<br>
-                                    Editora: " . $res['editora'] . "<br>
-                                    Nº de Páginas: " . $res['paginas'] . "<br>
-                                    Data de Publicação: " . $res['publicacao'] . " <br>
-                                    Status: " . $res['status'] . "<br>
+                                    Matrícula: " . $res['matricula'] . "<br>
                                     <div class='mt-3'>
-                                        <a href='confirmar_delete.php?codigo=" . $res['codigo'] . "'><i class='material-icons' style='color: brown;'>close</i></a>
-                                        <a href='editar.php?codigo=" . $res['codigo'] . "' ><i class='material-icons' style='color: brown;'>edit</i></a>
-                                        <a href='emprestimo.php?codigo=" . $res['codigo'] . "'><i class='material-icons' style='color: brown;' >app_registration</i></a>
+                                        <a href='confirmar_delete.php?codigo=" . $res['matricula'] . "'><i class='material-icons' style='color: brown;'>close</i></a>
+                                        <a href='editar.php?codigo=" . $res['matricula'] . "' ><i class='material-icons' style='color: brown;'>edit</i></a>
+                                        <a href='emprestimo.php?codigo=" . $res['matricula'] . "'><i class='material-icons' style='color: brown;' >app_registration</i></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         ";
-                    }
-                    ?>
-                </div>
-                <?php
-                $anterior = $pc - 1;
-                $proximo = $pc + 1;
-                if ($pc > 1) {
-                    echo " <a class='btn btn-dark' role='button' href='?pagina=$anterior'><- Anterior</a> ";
-                }
-                if ($pc < $tp) {
-                    echo " <a class='btn btn-dark' role='button' href='?pagina=$proximo'>Próxima -></a>";
                 }
                 ?>
             </div>
+            <?php
+            $anterior = $pc - 1;
+            $proximo = $pc + 1;
+            if ($pc > 1) {
+                echo " <a class='btn btn-dark' role='button' href='?pagina=$anterior'><- Anterior</a> ";
+            }
+            if ($pc < $tp) {
+                echo " <a class='btn btn-dark' role='button' href='?pagina=$proximo'>Próxima -></a>";
+            }
+            ?>
+        </div>
 
 
 
-            <!--Accordion
+        <!--Accordion
         <div class="accordion mt-5" id="accordion">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
@@ -211,15 +202,15 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
             </div>
         </div>
 -->
-        </div>
+    </div>
 
-        <!-- JS -->
-        <!-- Bootstrap Bundle with Popper -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-        </script>
-        <!-- SearchBar JS -->
-        <script src="assets/js/search2.js"></script>
+    <!-- JS -->
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+    <!-- SearchBar JS -->
+    <script src="assets/js/search2.js"></script>
 
 </body>
 

@@ -1,30 +1,26 @@
 <?php
 session_start();
 include('verifica_login.php');
-include "conexao.php";
+include("conexao.php");
 
-if (isset($_POST['codigo'])) {
-    $codigo = trim($_POST['codigo']);
-    $titulo = $_POST['titulo'];
-    $autor = $_POST['autor'];
-    $editora = $_POST['editora'];
-    $paginas = $_POST['paginas'];
-    $publicacao = $_POST['publicacao'];
-    $publicacao = date("Y-m-d",strtotime(str_replace('/','-',$publicacao))); 
+if (isset($_POST['matricula'])) {
+    $codigo = trim($_POST['matricula']);
+    $nome = $_POST['nome'];
+    $turma = $_POST['turma'];
 
-    $sql = "select count(*) as total from livros where codigo = '$codigo'";
+    $sql = "select count(*) as total from alunos where matricula = '$codigo'";
     $result = mysqli_query($conexao, $sql);
     $row = mysqli_fetch_assoc($result);
 
-if($row['total'] == 1) {
-	echo("<script>alert('Erro: código duplicado! Você não pode cadastrar dois livros com o mesmo código.'); window.location.href = 'adicionar.php'</script>");
-	exit;
-}
-    if (mysqli_query($conexao, "insert into livros (codigo, titulo, autor, editora, paginas, publicacao, data_cadastro) values ('$codigo','$titulo','$autor','$editora','$paginas','$publicacao', NOW()) ")) {
-    ?>
+    if ($row['total'] == 1) {
+        echo ("<script>alert('Erro: código duplicado! Você não pode cadastrar o mesmo número de matrícula duas vezes.'); window.location.href = 'alunos.php'</script>");
+        exit;
+    }
+    if (mysqli_query($conexao, "insert into alunos (matricula, nome, turma) values ('$codigo','$nome','$turma') ")) {
+?>
 <script type="text/javascript">
-alert("Livro adicionado com sucesso!")
-window.location.href = "home.php";
+alert("Aluno cadastrado com sucesso!")
+window.location.href = "alunos.php";
 </script>"
 <?php
 
@@ -38,12 +34,7 @@ window.location.href = "home.php";
 }
 mysqli_close($conexao);
 
-
 ?>
-
-
-
-
 
 
 <!DOCTYPE html>
@@ -63,7 +54,7 @@ mysqli_close($conexao);
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="assets/css/style-form.css">
 
-    <title>Adicionar Livro</title>
+    <title>Cadastrar Aluno</title>
 </head>
 
 <body class="body-form">
@@ -96,37 +87,25 @@ mysqli_close($conexao);
                 </div>
         </nav>
         <!--//NavBar-->
-        <h1 class="text-start text-white mt-5 pt-4 pb-3">Adicionar Livro</h1>
+        <h1 class="text-start text-white mt-5 pt-4 pb-3">Cadastrar Aluno</h1>
 
         <div id="controlDiv" class="row justify-content-start">
             <div class="col-8 text-white">
                 <form method="post" action="">
 
                     <div class="mb-3">
-                        <label class="form-label">Código do Livro</label>
-                        <input class="form-control" type="text" name="codigo" required>
+                        <label class="form-label">Matrícula</label>
+                        <input class="form-control" type="text" name="matricula" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Título</label>
-                        <input class="form-control" type="text" name="titulo" required>
+                        <label class="form-label">Nome</label>
+                        <input class="form-control" type="text" name="nome" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Autor</label>
-                        <input class="form-control" type="text" name="autor" required>
+                        <label class="form-label">Turma</label>
+                        <input class="form-control" type="text" name="turma" required>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Editora</label>
-                        <input class="form-control" type="text" name="editora" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Nº de Páginas</label>
-                        <input class="form-control" type="text" name="paginas" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Data de Publicação</label>
-                        <input class="form-control" type="date" name="publicacao" required>
-                    </div>
-                    <button type="submit" class="btn btn-dark">ADICIONAR</button>
+                    <button type="submit" class="btn btn-dark">CADASTRAR</button>
                 </form>
             </div>
         </div>

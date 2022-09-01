@@ -36,6 +36,7 @@ CREATE TABLE `livros` (
   `publicacao` date DEFAULT NULL,
   `data_cadastro` datetime NOT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'disponivel'
+  ALTER TABLE `livros` ADD PRIMARY KEY(`codigo`);
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

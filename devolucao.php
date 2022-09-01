@@ -68,7 +68,7 @@ window.location.href = "home.php";
         <!-- NavBar -->
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark rounded">
             <div class="container-fluid">
-                <a class="navbar-brand" href="home.php">BiblioTech</a>
+                <a class="navbar-brand" href="home.php">Biblioteca</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -82,7 +82,11 @@ window.location.href = "home.php";
                                     <a class="nav-link" aria-current="page" href="home.php">Home</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="alunos.php">Alunos</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="logout.php">Sair</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
