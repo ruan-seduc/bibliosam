@@ -1,46 +1,45 @@
 <?php
-    session_start();
-    include('verifica_login.php');
-    include "conexao.php";
-    
-    if(isset($_GET['codigo'])){
-        $id = trim($_GET['codigo']);
-        $resultado = mysqli_query($conexao, "Select * from registro where codigo = '$id'");
-        $dados = mysqli_fetch_array($resultado);
-    }
+session_start();
+include('verifica_login.php');
+include "conexao.php";
 
-    if (isset($_POST['codigo'])) {
-        $codigo = trim($_POST['codigo']);
-        $nome = $_POST['nome'];
-        $turma = $_POST['turma'];
-        $emprestado = $_POST['data'];
-        $prazo = $_POST['prazo'];
-        $devolucao = $_POST['devolucao'];
-    
-        $sql = "select count(*) as total from registro where codigo = '$codigo'";
-        $result = mysqli_query($conexao, $sql);
-        $row = mysqli_fetch_assoc($result);
+if (isset($_GET['codigo'])) {
+    $id = trim($_GET['codigo']);
+    $resultado = mysqli_query($conexao, "Select * from registro where codigo = '$id'");
+    $dados = mysqli_fetch_array($resultado);
+}
 
-        if (mysqli_query($conexao, "delete from registro where codigo = '$codigo'")) {
-            $sqlb = "UPDATE livros SET status = 'disponivel' WHERE codigo = '$codigo'";
-            if(mysqli_query($conexao, $sqlb)){
-                ?>
+if (isset($_POST['codigo'])) {
+    $codigo = trim($_POST['codigo']);
+    $nome = $_POST['nome'];
+    $turma = $_POST['turma'];
+    $emprestado = $_POST['data'];
+    $prazo = $_POST['prazo'];
+    $devolucao = $_POST['devolucao'];
+
+    $sql = "select count(*) as total from registro where codigo = '$codigo'";
+    $result = mysqli_query($conexao, $sql);
+    $row = mysqli_fetch_assoc($result);
+
+    if (mysqli_query($conexao, "delete from registro where codigo = '$codigo'")) {
+        $sqlb = "UPDATE livros SET status = 'disponivel' WHERE codigo = '$codigo'";
+        if (mysqli_query($conexao, $sqlb)) {
+?>
 <script type="text/javascript">
 alert("Livro devolvido com sucesso!")
 window.location.href = "home.php";
 </script>
 <?php
 
-            }
-            else{
-                echo("<script type='text/javascript'>
+        } else {
+            echo ("<script type='text/javascript'>
                 alert('Livro devolvido com sucesso!')
                 window.location.href = 'home.php';
                 </script>");
-            }
         }
     }
-    
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -104,13 +103,8 @@ window.location.href = "home.php";
                             required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Nome</label>
-                        <input class="form-control" type="text" name="nome" value=" <?php echo $dados["nome"] ?>"
-                            required>
-                    </div>
-                    <div class=" mb-3">
-                        <label class="form-label">Turma</label>
-                        <input class="form-control" type="text" name="turma" value=" <?php echo $dados["turma"] ?>"
+                        <label class="form-label">Matrícula</label>
+                        <input class="form-control" type="text" name="nome" value=" <?php echo $dados["matricula"] ?>"
                             required>
                     </div>
                     <div class=" mb-3">
@@ -121,14 +115,14 @@ window.location.href = "home.php";
                     <div class=" mb-3">
                         <label class="form-label">Prazo de Devolução</label>
                         <input class="form-control" type="text" name="prazo"
-                            value=" <?php echo $dados["prazo"]." dias" ?>" required>
+                            value=" <?php echo $dados["prazo"] . " dias" ?>" required>
                     </div>
                     <div class=" mb-3">
                         <label class="form-label">Data da Devolução</label>
                         <input class="form-control" type="date" name="devolucao" required>
                     </div>
 
-                    <button type="submit" class="btn btn-dark">Submit</button>
+                    <button type="submit" class="btn btn-dark">DEVOLVER</button>
                 </form>
             </div>
         </div>

@@ -5,8 +5,8 @@ include "conexao.php";
 
 if (isset($_GET['codigo'])) {
     $id = $_GET['codigo'];
-    $resultado = mysqli_query($conexao, "Select * from livros where codigo = '$id'");
-    $dados = mysqli_fetch_array($resultado);
+    $resultadol = mysqli_query($conexao, "Select * from livros where codigo = '$id'");
+    $dadosl = mysqli_fetch_array($resultadol);
 
     $search = mysqli_query($conexao, "SELECT codigo, status FROM livros where codigo = '$id' AND status = 'emprestado'");
     if (mysqli_num_rows($search)) {
@@ -15,11 +15,9 @@ if (isset($_GET['codigo'])) {
     };
 }
 
-
 if (isset($_POST['codigo'])) {
     $codigo = trim($_POST['codigo']);
-    $nome = $_POST['nome'];
-    $turma = $_POST['turma'];
+    $matricula = $_POST['matricula'];
     $emprestado = $_POST['data'];
     $prazo = $_POST['prazo'];
 
@@ -32,7 +30,7 @@ if (isset($_POST['codigo'])) {
         header('Location: emprestimo.php');
         exit;
     }
-    if (mysqli_query($conexao, "insert into registro (codigo, nome, turma, data, prazo) Value ('$codigo','$nome','$turma','$emprestado','$prazo') ")) {
+    if (mysqli_query($conexao, "insert into registro (codigo, matricula, data, prazo) Value ('$codigo','$matricula','$emprestado','$prazo') ")) {
         $sqlb = "UPDATE livros SET status = 'emprestado' WHERE codigo = '$id'";
         if (mysqli_query($conexao, $sqlb)) {
 ?>
@@ -111,16 +109,21 @@ window.location.href = "home.php";
                 <form method="post" action="">
                     <div class="mb-3">
                         <label class="form-label">Código do Livro</label>
-                        <input class="form-control" type="text" name="codigo" value=" <?php echo $dados["codigo"] ?> ">
+                        <input class="form-control" type="text" name="codigo" required
+                            value=" <?php echo ($dadosl["codigo"]) ?> ">
                     </div>
                     <div class="mb-3">
+                        <label class="form-label">Nº de matrícula</label>
+                        <input class="form-control" type="text" name="matricula" required>
+                    </div>
+                    <!-- <div class="mb-3">
                         <label class="form-label">Nome</label>
                         <input class="form-control" type="text" name="nome" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Turma</label>
                         <input class="form-control" type="text" name="turma" required>
-                    </div>
+                    </div> -->
                     <div class="mb-3">
                         <label class="form-label">Data do Empréstimo</label>
                         <input class="form-control" type="date" name="data" required>

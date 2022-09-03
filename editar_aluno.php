@@ -5,25 +5,21 @@ include "conexao.php";
 
 if (isset($_GET['codigo'])) {
     $id = $_GET['codigo'];
-    $resultado = mysqli_query($conexao, "Select * from livros where codigo = '$id'");
+    $resultado = mysqli_query($conexao, "Select * from alunos where matricula = '$id'");
     $dados = mysqli_fetch_array($resultado);
 }
 
 if (isset($_POST['codigo'])) {
-    $codigo = trim($_POST['codigo']);
-    $titulo = $_POST['titulo'];
-    $autor = $_POST['autor'];
-    $editora = $_POST['editora'];
-    $paginas = $_POST['paginas'];
-    $publicacao = $_POST['publicacao'];
-    $publicacao = date("Y-m-d", strtotime(str_replace('/', '-', $publicacao)));
+    $codigo = trim($_POST['matricula']);
+    $nome = $_POST['nome'];
+    $turma = $_POST['turma'];
 
-    $sqla = "select count(*) as total from livros where codigo = '$codigo'";
+    $sqla = "select count(*) as total from alunos where matricula = '$codigo'";
     $result = mysqli_query($conexao, $sqla);
     $row = mysqli_fetch_assoc($result);
 
     if ($row['total'] == 1) {
-        echo ("<script>alert('Erro: código duplicado! Você não pode cadastrar dois livros com o mesmo código.'); window.location.href = 'adicionar.php'</script>");
+        echo ("<script>alert('Erro: código duplicado! Você não pode cadastrar dois alunos com o mesmo número de matrícula.'); window.location.href = 'adicionar.php'</script>");
         exit;
     }
 

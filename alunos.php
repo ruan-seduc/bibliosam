@@ -118,9 +118,9 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
                                 <div class='accordion-body col-auto'>
                                     Matrícula: " . $res['matricula'] . "<br>
                                     <div class='mt-3'>
-                                        <a href='confirmar_delete.php?codigo=" . $res['matricula'] . "'><i class='material-icons' style='color: brown;'>close</i></a>
-                                        <a href='editar.php?codigo=" . $res['matricula'] . "' ><i class='material-icons' style='color: brown;'>edit</i></a>
-                                        <a href='emprestimo.php?codigo=" . $res['matricula'] . "'><i class='material-icons' style='color: brown;' >app_registration</i></a>
+                                        <a href='confirmar_remocao_aluno.php?codigo=" . $res['matricula'] . "'><i class='material-icons' style='color: brown;'>close</i></a>
+                                        <a href='editar_aluno.php?codigo=" . $res['matricula'] . "' ><i class='material-icons' style='color: brown;'>edit</i></a>
+                                        <a href='emprestimo.php?matricula=" . $res['matricula'] . "'><i class='material-icons' style='color: brown;' >app_registration</i></a>
                                     </div>
                                 </div>
                             </div>
