@@ -10,7 +10,7 @@ $busca = "select * from alunos order by nome";
 
 $total_reg = "20"; // número de registros por página
 
-$pagina = $_GET['pagina'];
+$pagina = (isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
 if (!$pagina) {
     $pc = "1";
 } else {
@@ -79,12 +79,19 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
         <!--//NavBar-->
         <h1 class="text-center mt-5 p-4">Alunos</h1>
 
+        <!--Barra de Pesquisa -->
         <div class="row justify-content-center">
             <div class="col-6">
-                <input id="searchbar" onkeyup="search_books()" type="text" class="form-control"
-                    placeholder="Pesquisar livros">
+                <form method="GET" action="busca_alunos.php">
+                    <input class="form-control" type="text" id="consulta" name="busca_alunos" maxlength="255"
+                        placeholder="Digite um nome para pesquisar" />
+
+                    <input class="btn-warning" type="submit" value="Buscar" />
+                </form>
             </div>
         </div>
+
+        <!--//Barra de Pesquisa-->
 
         <style>
         .form-control:focus {
@@ -120,7 +127,7 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
                                     <div class='mt-3'>
                                         <a href='confirmar_remocao_aluno.php?codigo=" . $res['matricula'] . "'><i class='material-icons' style='color: brown;'>close</i></a>
                                         <a href='editar_aluno.php?codigo=" . $res['matricula'] . "' ><i class='material-icons' style='color: brown;'>edit</i></a>
-                                        <a href='emprestimo.php?matricula=" . $res['matricula'] . "'><i class='material-icons' style='color: brown;' >app_registration</i></a>
+                                        <a href='historico.php?matricula=" . $res['matricula'] . "'><i class='material-icons' style='color: brown;' >app_registration</i></a>
                                     </div>
                                 </div>
                             </div>

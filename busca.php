@@ -3,7 +3,14 @@ session_start();
 include('verifica_login.php');
 include "conexao.php";
 
-$busca = "select * from livros order by titulo";
+if (!isset($_GET['busca_livros'])) {
+    header("Location: home.php");
+    exit;
+}
+
+$busca = trim($_GET['busca_livros']);
+
+// $sql = mysqli_query($conexao, "SELECT * FROM livros WHERE titulo LIKE '%$busca%' order by titulo");
 
 // sistema de paginação
 $pagina = (isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
@@ -18,13 +25,33 @@ $total_reg = "2"; // número de registros por página
 $inicio = $pc - 1;
 $inicio = $inicio * $total_reg;
 
-$limite = mysqli_query($conexao, "$busca LIMIT $inicio,$total_reg");
-$todos = mysqli_query($conexao, "$busca");
+$limite = mysqli_query($conexao, "SELECT * FROM livros WHERE titulo LIKE '%$busca%' order by titulo LIMIT $inicio,$total_reg");
+$todos = mysqli_query($conexao, "SELECT * FROM livros WHERE titulo LIKE '%$busca%' order by titulo");
 
 $tr = mysqli_num_rows($todos); // verifica o número total de registros
 $tp = $tr / $total_reg; // verifica o número total de páginas
 
-?>
+
+/*$count = mysqli_num_rows($sql);
+if ($count == 0) {
+    echo "Nenhum resultado!";
+} else {
+    // senão
+    if ($count == 1) {
+        echo "1 resultado encontrado! <br>";
+    }
+    // se houver um resultado diz que existe um resultado
+    if ($count > 1) {
+        echo "$count resultados encontrados! <br>";
+    }
+    // se houver mais de um resultado diz quantos resultados existem
+    while ($dados = mysqli_fetch_array($sql)) {
+        // enquanto houverem resultados...
+        echo "$dados[titulo]";
+        echo " - $dados[codigo] <br>";
+        // exibir a coluna nome e a coluna email
+    }
+} */ ?>
 
 <!doctype html>
 <html lang="pt-br">
@@ -75,34 +102,8 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
                 </div>
         </nav>
         <!--//NavBar-->
-        <h1 class="text-center mt-5 p-4">Controle de Livros</h1>
 
-        <!--Barra de Pesquisa -->
-        <div class="row justify-content-center">
-            <div class="col-6">
-                <form method="GET" action="busca.php">
-                    <input class="form-control" type="text" id="consulta" name="busca_livros" maxlength="255"
-                        placeholder="Digite um titulo para pesquisar" />
-
-                    <input class="btn-warning" type="submit" value="Buscar" />
-                </form>
-            </div>
-        </div>
-
-        <!--//Barra de Pesquisa-->
-
-        <style>
-        .form-control:focus {
-            border-color: rgb(102, 52, 45) !important;
-            box-shadow: 0 0 0 0.12rem rgba(102, 52, 45, 0.719);
-        }
-        </style>
-
-        <div class="row justify-content-center">
-            <div class="col-auto mt-3">
-                <a class="btn btn-dark" href="adicionar.php" role="button">Adicionar Livro</a>
-            </div>
-        </div>
+        <h1 class="text-center mt-5 p-4">Busca de Livros</h1>
 
         <div class="row justify-content-center">
             <div class="accordion mt-4 col-8 media-control" id="accordion">
@@ -141,84 +142,19 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
             $anterior = $pc - 1;
             $proximo = $pc + 1;
             if ($pc > 1) {
-                echo " <a class='btn btn-dark' role='button' href='?pagina=$anterior'><- Anterior</a> ";
+                echo " <a class='btn btn-dark' role='button' href='?busca_livros=$busca&pagina=$anterior'><- Anterior</a> ";
             }
             if ($pc < $tp) {
-                echo " <a class='btn btn-dark' role='button' href='?pagina=$proximo'>Próxima -></a>";
+                echo " <a class='btn btn-dark' role='button' href='?busca_livros=$busca&pagina=$proximo'>Próxima -></a>";
             }
             ?>
         </div>
-
-
-
-        <!--Accordion
-        <div class="accordion mt-5" id="accordion">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                        Accordion Item #1
-                    </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
-                    data-bs-parent="#accordion">
-                    <div class="accordion-body">
-                        Autor: fulano<br>
-                        Editora: tal<br>
-                        Ano de Publicação: 1111-11-11<br>
-                        <a href="editar.php?codigo=123"><i class="material-icons" style='color: black;'>edit</i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Accordion Item #2
-                    </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                    data-bs-parent="#accordion">
-                    <div class="accordion-body">
-                        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the
-                        collapse plugin adds the appropriate classes that we use to style each element. These classes
-                        control the overall appearance, as well as the showing and hiding via CSS transitions. You can
-                        modify any of this with custom CSS or overriding our default variables. It's also worth noting
-                        that just about any HTML can go within the <code>.accordion-body</code>, though the transition
-                        does limit overflow.
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Accordion Item #3
-                    </button>
-                </h2>
-                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                    data-bs-parent="#accordion">
-                    <div class="accordion-body">
-                        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the
-                        collapse plugin adds the appropriate classes that we use to style each element. These classes
-                        control the overall appearance, as well as the showing and hiding via CSS transitions. You can
-                        modify any of this with custom CSS or overriding our default variables. It's also worth noting
-                        that just about any HTML can go within the <code>.accordion-body</code>, though the transition
-                        does limit overflow.
-                    </div>
-                </div>
-            </div>
-        </div>
--->
     </div>
-
     <!-- JS -->
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
-    <!-- SearchBar JS -->
-    <script src="assets/js/search2.js"></script>
 
 </body>
 

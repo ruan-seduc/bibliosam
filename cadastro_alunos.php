@@ -13,7 +13,7 @@ if (isset($_POST['matricula'])) {
     $row = mysqli_fetch_assoc($result);
 
     if ($row['total'] == 1) {
-        echo ("<script>alert('Erro: código duplicado! Você não pode cadastrar o mesmo número de matrícula duas vezes.'); window.location.href = 'alunos.php'</script>");
+        echo ("<script>alert('Erro: código duplicado! Você não pode cadastrar o mesmo número de matrícula duas vezes.'); window.location.href = 'cadastro_alunos.php'</script>");
         exit;
     }
     if (mysqli_query($conexao, "insert into alunos (matricula, nome, turma) values ('$codigo','$nome','$turma') ")) {

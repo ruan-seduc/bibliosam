@@ -42,7 +42,7 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
 
     <link rel="stylesheet" href="assets/css/style-home.css">
 
-    <title>Controle de Livros</title>
+    <title>Historico</title>
 </head>
 
 <body>
@@ -75,7 +75,7 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
                 </div>
         </nav>
         <!--//NavBar-->
-        <h1 class="text-center mt-5 p-4">Controle de Livros</h1>
+        <h1 class="text-center mt-5 p-4">Histórico</h1>
 
         <!--Barra de Pesquisa -->
         <div class="row justify-content-center">

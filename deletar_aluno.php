@@ -5,9 +5,8 @@ include_once "conexao.php";
 
 $id = $_GET['codigo'];
 if (mysqli_query($conexao, "delete from alunos where matricula = '$id'")) {
-    session_start();
-    $_SESSION['msg'] = "Removido com sucesso";
+    echo ("<script>alert('Aluno removido com sucesso!')</script>");
     header("location: alunos.php");
 } else {
-    $_SESSION['msg'] = "Falha na remoção";
+    echo ("<script>alert('Algo não funcionou!')</script>");
 }

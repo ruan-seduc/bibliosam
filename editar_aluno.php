@@ -9,31 +9,14 @@ if (isset($_GET['codigo'])) {
     $dados = mysqli_fetch_array($resultado);
 }
 
-if (isset($_POST['codigo'])) {
-    $codigo = trim($_POST['matricula']);
+if (isset($_POST['matricula'])) {
+    $matricula = trim($_POST['matricula']);
     $nome = $_POST['nome'];
     $turma = $_POST['turma'];
 
-    $sqla = "select count(*) as total from alunos where matricula = '$codigo'";
-    $result = mysqli_query($conexao, $sqla);
-    $row = mysqli_fetch_assoc($result);
-
-    if ($row['total'] == 1) {
-        echo ("<script>alert('Erro: código duplicado! Você não pode cadastrar dois alunos com o mesmo número de matrícula.'); window.location.href = 'adicionar.php'</script>");
-        exit;
-    }
-
-    $sql = "UPDATE livros SET codigo = '$codigo', titulo = '$titulo', autor = '$autor', editora = '$editora', paginas = '$paginas', publicacao = '$publicacao' WHERE codigo = '$id'";
+    $sql = "UPDATE alunos SET nome = '$nome', turma = '$turma' WHERE matricula = '$matricula'";
     if (mysqli_query($conexao, $sql)) {
-        $_SESSION['msg'] = "Atualizado com Sucesso!";
-
-        echo '
-
-            <script>
-                    window.location.href = "home.php";
-            </script>
-        
-        ';
+        echo ("<script>alert('As informações do aluno foram atualizadas com sucesso!'); window.location.href = 'alunos.php'</script>");
     }
 }
 
@@ -57,7 +40,7 @@ if (isset($_POST['codigo'])) {
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="assets/css/style-form.css">
 
-    <title>Editar Livro</title>
+    <title>Editar Aluno</title>
 </head>
 </head>
 
@@ -89,36 +72,25 @@ if (isset($_POST['codigo'])) {
         </nav>
         <!--//NavBar-->
 
-        <h1 class="text-start text-white mt-5 pt-4 pb-3">Tela de Edição</h1>
+        <h1 class="text-start text-white mt-5 pt-4 pb-3">Editar dados do aluno</h1>
 
         <div id="controlDiv" class="row justify-content-start">
             <div class="col-8 text-white">
                 <form method="post" action="">
                     <div class="mb-3">
-                        <label class="form-label">Código</label>
-                        <input class="form-control" type="text" name="codigo"
-                            value=" <?php echo trim($dados["codigo"]) ?> ">
+                        <label class="form-label">Matrícula</label>
+                        <input readonly class="form-control" type="text" name="matricula"
+                            value="<?php echo trim($dados["matricula"]) ?>">
+                        <small class="form-text text-muted">Por questões de integridade, não é possível alterar o número
+                            de matrícula.</small>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Título</label>
-                        <input class="form-control" type="text" name="titulo" value="<?php echo $dados['titulo'] ?>">
+                        <label class="form-label">Nome</label>
+                        <input class="form-control" type="text" name="nome" value="<?php echo $dados['nome'] ?>">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Autor</label>
-                        <input class="form-control" type="text" name="autor" value="<?php echo $dados['autor'] ?>">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Editora</label>
-                        <input class="form-control" type="text" name="editora" value="<?php echo $dados['editora'] ?>">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Nº de Páginas</label>
-                        <input class="form-control" ype="text" name="paginas" value="<?php echo $dados['paginas'] ?>">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Data de Publicação</label>
-                        <input class="form-control" type="date" name="publicacao"
-                            value="<?php echo $dados['publicacao'] ?>">
+                        <label class="form-label">Turma</label>
+                        <input class="form-control" type="text" name="turma" value="<?php echo $dados['turma'] ?>">
                     </div>
                     <button class="btn btn-dark" type="submit"> ATUALIZAR </button>
                 </form>

@@ -18,31 +18,12 @@ if (isset($_POST['codigo'])) {
     $publicacao = $_POST['publicacao'];
     $publicacao = date("Y-m-d", strtotime(str_replace('/', '-', $publicacao)));
 
-    $sqla = "select count(*) as total from livros where codigo = '$codigo'";
-    $result = mysqli_query($conexao, $sqla);
-    $row = mysqli_fetch_assoc($result);
-
-    if ($row['total'] == 1) {
-        echo ("<script>alert('Erro: código duplicado! Você não pode cadastrar dois livros com o mesmo código.'); window.location.href = 'adicionar.php'</script>");
-        exit;
-    }
-
-    $sql = "UPDATE livros SET codigo = '$codigo', titulo = '$titulo', autor = '$autor', editora = '$editora', paginas = '$paginas', publicacao = '$publicacao' WHERE codigo = '$id'";
+    $sql = "UPDATE livros SET titulo = '$titulo', autor = '$autor', editora = '$editora', paginas = '$paginas', publicacao = '$publicacao' WHERE codigo = '$id'";
     if (mysqli_query($conexao, $sql)) {
-        $_SESSION['msg'] = "Atualizado com Sucesso!";
-
-        echo '
-
-            <script>
-                    window.location.href = "home.php";
-            </script>
-        
-        ';
+        echo ("<script>alert('Livro atualizado com sucesso!'); window.location.href = 'home.php'</script>");
     }
 }
-
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -100,24 +81,30 @@ if (isset($_POST['codigo'])) {
                 <form method="post" action="">
                     <div class="mb-3">
                         <label class="form-label">Código</label>
-                        <input class="form-control" type="text" name="codigo"
-                            value=" <?php echo trim($dados["codigo"]) ?> ">
+                        <input readonly class="form-control" type="text" name="codigo"
+                            value="<?php echo trim($dados["codigo"]) ?>">
+                        <small class="form-text text-muted">Por questões de integridade, não é possível alterar o código
+                            do livro.</small>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Título</label>
-                        <input class="form-control" type="text" name="titulo" value="<?php echo $dados['titulo'] ?>">
+                        <input class="form-control" type="text" name="titulo" value="<?php echo $dados['titulo'] ?>"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Autor</label>
-                        <input class="form-control" type="text" name="autor" value="<?php echo $dados['autor'] ?>">
+                        <input class="form-control" type="text" name="autor" value="<?php echo $dados['autor'] ?>"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Editora</label>
-                        <input class="form-control" type="text" name="editora" value="<?php echo $dados['editora'] ?>">
+                        <input class="form-control" type="text" name="editora" value="<?php echo $dados['editora'] ?>"
+                            required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Nº de Páginas</label>
-                        <input class="form-control" ype="text" name="paginas" value="<?php echo $dados['paginas'] ?>">
+                        <label class="form-label">Nº de Páginas</label required>
+                        <input class="form-control" ype="text" name="paginas" value="<?php echo $dados['paginas'] ?>"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Data de Publicação</label>
