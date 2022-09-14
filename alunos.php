@@ -86,7 +86,7 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
                     <input class="form-control" type="text" id="consulta" name="busca_alunos" maxlength="255"
                         placeholder="Digite um nome, turma ou nº de matrícula para pesquisar" />
 
-                    <input class="btn-warning" type="submit" value="Buscar" />
+                    <input class="btn btn-dark" type="submit" value="Buscar" />
                 </form>
             </div>
         </div>

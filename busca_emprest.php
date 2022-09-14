@@ -25,8 +25,8 @@ $total_reg = "2"; // número de registros por página
 $inicio = $pc - 1;
 $inicio = $inicio * $total_reg;
 
-$limite = mysqli_query($conexao, "SELECT * FROM livros WHERE titulo LIKE '%$busca%' OR codigo LIKE '%$busca%' AND status = 'emprestado' ORDER BY titulo LIMIT $inicio,$total_reg");
-$todos = mysqli_query($conexao, "SELECT * FROM livros WHERE titulo LIKE '%$busca%' OR codigo LIKE '%$busca%' AND status = 'emprestado' ORDER BY titulo");
+$limite = mysqli_query($conexao, "SELECT * FROM livros WHERE titulo LIKE '%$busca%' AND status = 'emprestado' OR codigo LIKE '%$busca%' AND status = 'emprestado' ORDER BY titulo LIMIT $inicio,$total_reg");
+$todos = mysqli_query($conexao, "SELECT * FROM livros WHERE titulo LIKE '%$busca%' AND status = 'emprestado' OR codigo LIKE '%$busca%' AND status = 'emprestado' ORDER BY titulo");
 
 $tr = mysqli_num_rows($todos); // verifica o número total de registros
 $tp = $tr / $total_reg; // verifica o número total de páginas
