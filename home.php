@@ -13,7 +13,7 @@ if (!$pagina) {
     $pc = $pagina;
 }
 
-$total_reg = "2"; // número de registros por página
+$total_reg = "20"; // número de registros por página
 
 $inicio = $pc - 1;
 $inicio = $inicio * $total_reg;

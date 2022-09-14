@@ -17,7 +17,7 @@ if (!$pagina) {
     $pc = $pagina;
 }
 
-$total_reg = "2"; // número de registros por página
+$total_reg = "20"; // número de registros por página
 
 $inicio = $pc - 1;
 $inicio = $inicio * $total_reg;
@@ -27,6 +27,11 @@ $todos = mysqli_query($conexao, "$busca");
 
 $tr = mysqli_num_rows($todos); // verifica o número total de registros
 $tp = $tr / $total_reg; // verifica o número total de páginas
+
+$emprestados = mysqli_query($conexao, "SELECT * FROM registro WHERE matricula = '$id'");
+$emprestados_result = mysqli_fetch_array($emprestados);
+$codigo1 = $emprestados_result['codigo'];
+$sel_exibicao = mysqli_query($conexao, "SELECT * FROM livros WHERE codigo = '$codigo1'");
 
 ?>
 
@@ -84,27 +89,58 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
         <!--//NavBar-->
         <h1 class="text-center mt-5 p-4">Histórico</h1>
 
-        <!--Barra de Pesquisa -->
-        <div class="row justify-content-center">
-            <div class="col-6">
-                <form method="GET" action="busca.php">
-                    <input class="form-control" type="text" id="consulta" name="busca_livros" maxlength="255"
-                        placeholder="Digite um titulo para pesquisar" />
-
-                    <input class="btn-warning" type="submit" value="Buscar" />
-                </form>
-            </div>
-        </div>
-
-        <!--//Barra de Pesquisa-->
-
         <style>
         .form-control:focus {
             border-color: rgb(102, 52, 45) !important;
             box-shadow: 0 0 0 0.12rem rgba(102, 52, 45, 0.719);
         }
         </style>
+        <h2 class="text-center mt-5 p-4">Emprestados</h2>
+        <div class="row justify-content-center">
+            <div class="accordion mt-4 col-8 media-control" id="accordion">
+                <?php
+                for ($read = 1; $res = mysqli_fetch_array($sel_exibicao); $read++) {
+                    $registro = mysqli_query($conexao, "SELECT * FROM registro WHERE codigo = '$codigo1'");
+                    $dados_registro = mysqli_fetch_array($registro);
+                    echo "
+                        <div class='accordion-item'>
+                            <h2 class='accordion-header' id='heading" . $read . "'>
+                            <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse'
+                            data-bs-target='#collapse" . $read . "' aria-expanded='false' aria-controls='collapse" . $read . "'>"
+                        . $res['codigo'] . " - " . $res['titulo'] . "
+                            </button>
+                            </h2>
+                            <div id='collapse" . $read . "' class='accordion-collapse collapse' aria-labelledby='heading" . $read . "'
+                            data-bs-parent='#accordion'>
+                            <div class='row justify-content-center'>
+                                <div class='accordion-body col-auto'>
+                                Data do emprestimo: " . $dados_registro['data'] . "<br>
+                                Prazo: " . $dados_registro['prazo'] . "<br>
+                                    <div class='mt-3'>
+                                        <a href='confirmar_delete.php?codigo=" . $res['codigo'] . "'><i class='material-icons' style='color: brown;'>close</i></a>
+                                        <a href='editar.php?codigo=" . $res['codigo'] . "' ><i class='material-icons' style='color: brown;'>edit</i></a>
+                                        <a href='emprestimo.php?codigo=" . $res['codigo'] . "'><i class='material-icons' style='color: brown;' >app_registration</i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        ";
+                }
+                ?>
+            </div>
+            <?php
+            $anterior = $pc - 1;
+            $proximo = $pc + 1;
+            if ($pc > 1) {
+                echo " <a class='btn btn-dark' role='button' href='?pagina=$anterior'><- Anterior</a> ";
+            }
+            if ($pc < $tp) {
+                echo " <a class='btn btn-dark' role='button' href='?pagina=$proximo'>Próxima -></a>";
+            }
+            ?>
+        </div>
 
+        <h2 class="text-center mt-5 p-4">Já devolvidos</h2>
         <div class="row justify-content-center">
             <div class="accordion mt-4 col-8 media-control" id="accordion">
                 <?php
@@ -149,7 +185,6 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
             }
             ?>
         </div>
-
 
 
         <!--Accordion

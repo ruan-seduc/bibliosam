@@ -26,8 +26,24 @@ if (isset($_POST['codigo'])) {
     $row = mysqli_fetch_assoc($result);
 
     if ($row['total'] == 1) {
-        $_SESSION['codigo_duplicado'] = true;
+        echo ("<script>alert('Erro: o livro já está emprestado!')</script>");
         header('Location: emprestimo.php');
+        exit;
+    }
+    $sqlb = "select count(*) as total from alunos where matricula = '$matricula'";
+    $resultb = mysqli_query($conexao, $sqlb);
+    $rowb = mysqli_fetch_assoc($resultb);
+
+    if ($rowb['total'] == 0) {
+        echo ("
+        <script>
+    var resultado = confirm('O aluno informado ainda não foi cadastrado. Deseja cadastrá-lo?');
+    if (resultado == true) {
+        window.location.href = 'cadastro_alunos.php?'
+    }
+    else {
+        window.location.href = 'home.php';
+    }</script>");
         exit;
     }
     if (mysqli_query($conexao, "insert into registro (codigo, matricula, data, prazo) Value ('$codigo','$matricula','$emprestado','$prazo') ")) {

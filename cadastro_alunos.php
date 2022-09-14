@@ -21,7 +21,7 @@ if (isset($_POST['matricula'])) {
 <script type="text/javascript">
 alert("Aluno cadastrado com sucesso!")
 window.location.href = "alunos.php";
-</script>"
+</script>
 <?php
 
     } else {
