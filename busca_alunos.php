@@ -25,8 +25,8 @@ $total_reg = "2"; // número de registros por página
 $inicio = $pc - 1;
 $inicio = $inicio * $total_reg;
 
-$limite = mysqli_query($conexao, "SELECT * FROM alunos WHERE nome LIKE '%$busca%' OR turma LIKE '%$busca%' ORDER BY nome LIMIT $inicio,$total_reg");
-$todos = mysqli_query($conexao, "SELECT * FROM alunos WHERE nome LIKE '%$busca%' OR turma LIKE '%$busca%' ORDER BY nome");
+$limite = mysqli_query($conexao, "SELECT * FROM alunos WHERE nome LIKE '%$busca%' OR turma LIKE '%$busca%' OR matricula LIKE '%$busca%' ORDER BY nome LIMIT $inicio,$total_reg");
+$todos = mysqli_query($conexao, "SELECT * FROM alunos WHERE nome LIKE '%$busca%' OR turma LIKE '%$busca%' OR matricula LIKE '%$busca%' ORDER BY nome");
 
 $tr = mysqli_num_rows($todos); // verifica o número total de registros
 $tp = $tr / $total_reg; // verifica o número total de páginas

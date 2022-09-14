@@ -64,6 +64,9 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
                                     <a class="nav-link" aria-current="page" href="home.php">Home</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="emprestados.php">Emprestados</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="alunos.php">Alunos</a>
                                 </li>
                                 <li class="nav-item">

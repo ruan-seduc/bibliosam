@@ -3,11 +3,7 @@ session_start();
 include('verifica_login.php');
 include "conexao.php";
 
-if (isset($_GET['matricula'])) {
-    $id = $_GET['matricula'];
-}
-
-$busca = "Select * from historico where matricula = '$id'";
+$busca = "select * from livros where status = 'emprestado' order by titulo";
 
 // sistema de paginação
 $pagina = (isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
@@ -46,7 +42,7 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
 
     <link rel="stylesheet" href="assets/css/style-home.css">
 
-    <title>Historico</title>
+    <title>Controle de Livros</title>
 </head>
 
 <body>
@@ -68,9 +64,6 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
                                     <a class="nav-link" aria-current="page" href="home.php">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="emprestados.php">Emprestados</a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link" href="alunos.php">Alunos</a>
                                 </li>
                                 <li class="nav-item">
@@ -82,7 +75,7 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
                 </div>
         </nav>
         <!--//NavBar-->
-        <h1 class="text-center mt-5 p-4">Histórico</h1>
+        <h1 class="text-center mt-5 p-4">Controle de Livros</h1>
 
         <!--Barra de Pesquisa -->
         <div class="row justify-content-center">
@@ -106,26 +99,36 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
         </style>
 
         <div class="row justify-content-center">
+            <div class="col-auto mt-3">
+                <a class="btn btn-dark" href="adicionar.php" role="button">Adicionar Livro</a>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
             <div class="accordion mt-4 col-8 media-control" id="accordion">
                 <?php
                 for ($read = 1; $res = mysqli_fetch_array($limite); $read++) {
-                    $codigo = trim($res['codigo']);
-                    $livro_info = mysqli_query($conexao, "Select * from livros where codigo = '$codigo'");
-                    $livro_result = mysqli_fetch_array($livro_info);
+                    $codigo = $res['codigo'];
+                    $info_emprest = mysqli_query($conexao, "Select * from registro where codigo = '$codigo'");
+                    $emprest_result = mysqli_fetch_array($info_emprest);
+                    $matricula = $emprest_result['matricula'];
+                    $info_aluno = mysqli_query($conexao, "Select * from alunos where matricula = '$matricula'");
+                    $aluno_result = mysqli_fetch_array($info_aluno);
                     echo "
                         <div class='accordion-item'>
                             <h2 class='accordion-header' id='heading" . $read . "'>
                             <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse'
                             data-bs-target='#collapse" . $read . "' aria-expanded='false' aria-controls='collapse" . $read . "'>"
-                        . $res['codigo'] . " - " . $livro_result['titulo'] . "
+                        . $res['codigo'] . " - " . $res['titulo'] . "
                             </button>
                             </h2>
                             <div id='collapse" . $read . "' class='accordion-collapse collapse' aria-labelledby='heading" . $read . "'
                             data-bs-parent='#accordion'>
                             <div class='row justify-content-center'>
                                 <div class='accordion-body col-auto'>
-                                    Data do emprestimo: " . $res['data_emprest'] . "<br>
-                                    Data da devolução: " . $res['data_dev'] . "<br>
+                                    Data do Empréstimo: " . $emprest_result['data'] . "<br>
+                                    Prazo para a Devolução: " . $emprest_result['prazo'] . " dias <br>
+                                    Aluno: " . $emprest_result['matricula'] . " - " . $aluno_result['nome'] . "<br>
                                     <div class='mt-3'>
                                         <a href='confirmar_delete.php?codigo=" . $res['codigo'] . "'><i class='material-icons' style='color: brown;'>close</i></a>
                                         <a href='editar.php?codigo=" . $res['codigo'] . "' ><i class='material-icons' style='color: brown;'>edit</i></a>

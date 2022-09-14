@@ -11,19 +11,19 @@ if (isset($_GET['codigo'])) {
 
 if (isset($_POST['codigo'])) {
     $codigo = trim($_POST['codigo']);
-    $nome = $_POST['nome'];
-    $turma = $_POST['turma'];
-    $emprestado = $_POST['data'];
-    $prazo = $_POST['prazo'];
+    $matricula = trim($_POST['matricula']);
+    $emprestado = $dados['data'];
     $devolucao = $_POST['devolucao'];
 
     $sql = "select count(*) as total from registro where codigo = '$codigo'";
     $result = mysqli_query($conexao, $sql);
     $row = mysqli_fetch_assoc($result);
 
-    if (mysqli_query($conexao, "delete from registro where codigo = '$codigo'")) {
-        $sqlb = "UPDATE livros SET status = 'disponivel' WHERE codigo = '$codigo'";
-        if (mysqli_query($conexao, $sqlb)) {
+    if (mysqli_query($conexao, "insert into historico (matricula, codigo, data_emprest, data_dev) values ('$matricula', '$codigo', '$emprestado', '$devolucao')"))
+
+        if (mysqli_query($conexao, "delete from registro where codigo = '$codigo'")) {
+            $sqlb = "UPDATE livros SET status = 'disponivel' WHERE codigo = '$codigo'";
+            if (mysqli_query($conexao, $sqlb)) {
 ?>
 <script type="text/javascript">
 alert("Livro devolvido com sucesso!")
@@ -31,13 +31,13 @@ window.location.href = "home.php";
 </script>
 <?php
 
-        } else {
-            echo ("<script type='text/javascript'>
-                alert('Livro devolvido com sucesso!')
+            } else {
+                echo ("<script type='text/javascript'>
+                alert('Algo deu errado!')
                 window.location.href = 'home.php';
                 </script>");
+            }
         }
-    }
 }
 
 ?>
@@ -104,8 +104,8 @@ window.location.href = "home.php";
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Matrícula</label>
-                        <input class="form-control" type="text" name="nome" value=" <?php echo $dados["matricula"] ?>"
-                            required>
+                        <input class="form-control" type="text" name="matricula"
+                            value=" <?php echo $dados["matricula"] ?>" required>
                     </div>
                     <div class=" mb-3">
                         <label class="form-label">Data do Empréstimo</label>
