@@ -125,8 +125,6 @@ $tp = $tr / $total_reg; // verifica o número total de páginas
                                 <div class='accordion-body col-auto'>
                                     Autor: " . $res['autor'] . "<br>
                                     Editora: " . $res['editora'] . "<br>
-                                    Nº de Páginas: " . $res['paginas'] . "<br>
-                                    Data de Publicação: " . $res['publicacao'] . " <br>
                                     Status: " . $res['status'] . "<br>
                                     <div class='mt-3'>
                                         <a href='confirmar_delete.php?codigo=" . $res['codigo'] . "'><i class='material-icons' style='color: brown;'>close</i></a>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('verifica_login.php');
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -20,7 +21,7 @@ session_start();
             <div class="row justify-content-sm-center align-items-center vh-100">
                 <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
                     <?php
-                    if(isset($_SESSION['usuario_existe'])):
+                    if (isset($_SESSION['usuario_existe'])) :
                     ?>
                     <div class="alert alert-danger" role="alert">
                         ERRO: Usuário já existe.
@@ -30,15 +31,15 @@ session_start();
                     unset($_SESSION['usuario_existe']);
                     ?>
                     <?php
-        if(isset($_SESSION['status_cadastro'])):
-        ?>
+                    if (isset($_SESSION['status_cadastro'])) :
+                    ?>
                     <div class="alert alert-success" role="alert">
                         Cadastro efetuado com sucesso.
                     </div>
                     <?php
-        endif;
-        unset($_SESSION['status_cadastro']);
-        ?>
+                    endif;
+                    unset($_SESSION['status_cadastro']);
+                    ?>
                     <div class="card shadow-lg">
                         <div class="card-body p-5">
                             <h1 class="fs-4 card-title fw-bold mb-4 text-center">Sistema de Cadastro</h1>

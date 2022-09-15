@@ -8,20 +8,18 @@ if (isset($_POST['codigo'])) {
     $titulo = $_POST['titulo'];
     $autor = $_POST['autor'];
     $editora = $_POST['editora'];
-    $paginas = $_POST['paginas'];
-    $publicacao = $_POST['publicacao'];
-    $publicacao = date("Y-m-d",strtotime(str_replace('/','-',$publicacao))); 
+    $publicacao = date("Y-m-d", strtotime(str_replace('/', '-', $publicacao)));
 
     $sql = "select count(*) as total from livros where codigo = '$codigo'";
     $result = mysqli_query($conexao, $sql);
     $row = mysqli_fetch_assoc($result);
 
-if($row['total'] == 1) {
-	echo("<script>alert('Erro: código duplicado! Você não pode cadastrar dois livros com o mesmo código.'); window.location.href = 'adicionar.php'</script>");
-	exit;
-}
-    if (mysqli_query($conexao, "insert into livros (codigo, titulo, autor, editora, paginas, publicacao, data_cadastro) values ('$codigo','$titulo','$autor','$editora','$paginas','$publicacao', NOW()) ")) {
-    ?>
+    if ($row['total'] == 1) {
+        echo ("<script>alert('Erro: código duplicado! Você não pode cadastrar dois livros com o mesmo código.'); window.location.href = 'adicionar.php'</script>");
+        exit;
+    }
+    if (mysqli_query($conexao, "insert into livros (codigo, titulo, autor, editora, data_cadastro) values ('$codigo','$titulo','$autor','$editora', NOW()) ")) {
+?>
 <script type="text/javascript">
 alert("Livro adicionado com sucesso!")
 window.location.href = "home.php";
@@ -37,14 +35,7 @@ window.location.href = "home.php";
     }
 }
 mysqli_close($conexao);
-
-
 ?>
-
-
-
-
-
 
 <!DOCTYPE html>
 <html>

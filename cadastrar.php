@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('verifica_login.php');
 include("conexao.php");
 
 $nome = mysqli_real_escape_string($conexao, trim($_POST['nome']));
@@ -26,4 +27,3 @@ $conexao->close();
 
 header('Location: cadastro.php');
 exit;
-?>
