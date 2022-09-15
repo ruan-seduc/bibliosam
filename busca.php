@@ -25,8 +25,8 @@ $total_reg = "2"; // número de registros por página
 $inicio = $pc - 1;
 $inicio = $inicio * $total_reg;
 
-$limite = mysqli_query($conexao, "SELECT * FROM livros WHERE titulo LIKE '%$busca%' order by titulo LIMIT $inicio,$total_reg");
-$todos = mysqli_query($conexao, "SELECT * FROM livros WHERE titulo LIKE '%$busca%' order by titulo");
+$limite = mysqli_query($conexao, "SELECT * FROM livros WHERE titulo LIKE '%$busca%' OR codigo LIKE '%$busca%' order by titulo LIMIT $inicio,$total_reg");
+$todos = mysqli_query($conexao, "SELECT * FROM livros WHERE titulo LIKE '%$busca%' OR codigo LIKE '%$busca%' order by titulo");
 
 $tr = mysqli_num_rows($todos); // verifica o número total de registros
 $tp = $tr / $total_reg; // verifica o número total de páginas
@@ -75,7 +75,7 @@ if ($count == 0) {
 <body>
     <div class="container">
         <!-- NavBar -->
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark rounded">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="home.php">Biblioteca</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

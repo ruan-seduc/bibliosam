@@ -1,14 +1,14 @@
 <?php
 
 $servidor = "localhost";
-$usuario ="root";
+$usuario = "root";
 $senha = "";
 $nomeBanco = "bibliosam_db";
 
-$conexao = mysqli_connect($servidor,$usuario,$senha,$nomeBanco);
+$conexao = mysqli_connect($servidor, $usuario, $senha, $nomeBanco);
 mysqli_set_charset($conexao, "utf8");
 
-if(mysqli_connect_error()){
+if (mysqli_connect_error()) {
     echo "
     
     <script>
@@ -24,5 +24,4 @@ if(mysqli_connect_error()){
     </script> 
     
     ";
-
 }

@@ -25,7 +25,7 @@ session_start();
                             width="100">
                     </div>-->
                     <?php
-                    if(isset($_SESSION['nao_autenticado'])):
+                    if (isset($_SESSION['nao_autenticado'])) :
                     ?>
                     <div class="alert alert-danger" role="alert">
                         ERRO: Usuário ou senha inválidos.
@@ -63,11 +63,6 @@ session_start();
                                     </button>
                                 </div>
                             </form>
-                        </div>
-                        <div class="card-footer py-3 border-0">
-                            <div class="text-center">
-                                Ainda não é cadastrado? <a href="cadastro.php" class="text-dark">Cadastre-se</a>
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -14,11 +14,9 @@ if (isset($_POST['codigo'])) {
     $titulo = $_POST['titulo'];
     $autor = $_POST['autor'];
     $editora = $_POST['editora'];
-    $paginas = $_POST['paginas'];
-    $publicacao = $_POST['publicacao'];
     $publicacao = date("Y-m-d", strtotime(str_replace('/', '-', $publicacao)));
 
-    $sql = "UPDATE livros SET titulo = '$titulo', autor = '$autor', editora = '$editora', paginas = '$paginas', publicacao = '$publicacao' WHERE codigo = '$id'";
+    $sql = "UPDATE livros SET titulo = '$titulo', autor = '$autor', editora = '$editora' WHERE codigo = '$id'";
     if (mysqli_query($conexao, $sql)) {
         echo ("<script>alert('Livro atualizado com sucesso!'); window.location.href = 'home.php'</script>");
     }
@@ -50,7 +48,7 @@ if (isset($_POST['codigo'])) {
 
     <div class="container">
         <!-- NavBar -->
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark rounded">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="home.php">BiblioTech</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -100,16 +98,6 @@ if (isset($_POST['codigo'])) {
                         <label class="form-label">Editora</label>
                         <input class="form-control" type="text" name="editora" value="<?php echo $dados['editora'] ?>"
                             required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Nº de Páginas</label required>
-                        <input class="form-control" ype="text" name="paginas" value="<?php echo $dados['paginas'] ?>"
-                            required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Data de Publicação</label>
-                        <input class="form-control" type="date" name="publicacao"
-                            value="<?php echo $dados['publicacao'] ?>">
                     </div>
                     <button class="btn btn-dark" type="submit"> ATUALIZAR </button>
                 </form>

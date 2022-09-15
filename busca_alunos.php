@@ -74,7 +74,7 @@ if ($count == 0) {
 <body>
     <div class="container">
         <!-- NavBar -->
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark rounded">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="home.php">Biblioteca</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
