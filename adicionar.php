@@ -109,14 +109,6 @@ mysqli_close($conexao);
                         <label class="form-label">Editora</label>
                         <input class="form-control" type="text" name="editora" required>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Nº de Páginas</label>
-                        <input class="form-control" type="text" name="paginas" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Data de Publicação</label>
-                        <input class="form-control" type="date" name="publicacao" required>
-                    </div>
                     <button type="submit" class="btn btn-dark">ADICIONAR</button>
                 </form>
             </div>
